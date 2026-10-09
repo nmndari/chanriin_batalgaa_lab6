@@ -27,5 +27,3 @@ sudo cp build/cli/pict /usr/local/bin/
   ```
 
 - Дэлгэцийн зураг: [Screenshot/alham1_batalgaa.png](Screenshot/alham1_batalgaa.png)
-
-  ![Алхам 1 баталгаа](Screenshot/alham1_batalgaa.png)
