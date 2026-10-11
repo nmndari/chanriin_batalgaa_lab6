@@ -212,3 +212,36 @@ S1–S21 нь A2-ийн 21 тест (6 хэвийн + 3 SINGLE + 12 ERROR); S22�
 - **S24** — amount = 0 ба үлдэгдэл 0; `0 ≤ 0` тул үлдэгдлийн шалгалт `0 > 0` гэж дүгнэхээс өмнө `ERROR_BAD_AMOUNT`.
 - **S25** — үлдэгдэл ба лимит хоёулаа хэтэрсэн; эрэмбээр үлдэгдэл түрүүлэх тул `ERROR_INSUFFICIENT`.
 - **S26 (сонирхолтой)** — `910` гэсэн тоо нь USD-ээр бол үлдэгдэл (1000) хүрэлцэх ч EUR-ээс хөрвүүлсний дараа 1001 USD болж **үлдэгдэл ба лимит хоёуланг** давна; хөрвүүлэлтийг алгасах эсвэл хөрвүүлэхээс өмнө шалгадаг алдааг илрүүлэх бөгөөд эрэмбээр `ERROR_INSUFFICIENT`.
+
+
+## Хэсэг B: PICT — pairwise covering array
+
+### B1 — Лекцийн браузерын жишээг шалгах
+
+Модель: [browser.model](browser.model)
+
+```
+Content: Allow, Restrict, Block
+Cookies: Allow, Restrict, Block
+Popups: Yes, No
+Addons: Yes, No
+Attacks: Yes, No
+Forgeries: Yes, No
+```
+
+```bash
+pict browser.model | tee results/browser-2way.txt
+pict browser.model /o:3 > results/browser-3way.txt
+tail -n +2 results/browser-2way.txt | wc -l   # 10
+tail -n +2 results/browser-3way.txt | wc -l   # 20
+```
+
+| Хамрах түвшин | Мөрийн тоо | Онолын доод хязгаар | Бүрэн олонлог (144)-оос | Үр дүн |
+|---|---|---|---|---|
+| 2-way | **10** | 9 (3 × 3) | 6.9% | [results/browser-2way.txt](results/browser-2way.txt) |
+| 3-way | **20** | 18 (3 × 3 × 2) | 13.9% | [results/browser-3way.txt](results/browser-3way.txt) |
+| Бүрэн | 144 (3 × 3 × 2⁴) | — | 100% | — |
+
+**2-way:** PICT 10 мөр гаргасан нь онолын доод хязгаар болох 9 мөрөөс 1-ээр их. Учир нь greedy алгоритм хамгийн бага мөрийг заавал олохгүй.
+
+**3-way:** PICT 20 мөр гаргасан нь 144 мөрөөс 86%-иар бага бөгөөд онолын доод хязгаар болох 18 мөртэй ойролцоо байна.
