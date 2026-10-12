@@ -1,0 +1,15 @@
+From: Valid, Frozen, Missing
+To: Valid, Missing, SameAsFrom, FrozenTo
+Amount: Normal, Negative, Zero, MinPositive, AtLimit, OverLimit, AtBalance, OverBalance, OverLimitAfterConv
+Currency: Same, MNT, EUR
+DailyLimit: Free, Partial, Full
+Balance: Positive, Zero
+
+# A2: [ERROR] ба [SINGLE] утгыг бусад параметрийн хэвийн утгатай НЭГ л удаа тестлэнэ
+IF [From] IN {"Frozen", "Missing"} THEN [To] = "Valid" AND [Amount] = "Normal" AND [Currency] = "Same" AND [DailyLimit] = "Free" AND [Balance] = "Positive";
+IF [To] IN {"Missing", "SameAsFrom", "FrozenTo"} THEN [From] = "Valid" AND [Amount] = "Normal" AND [Currency] = "Same" AND [DailyLimit] = "Free" AND [Balance] = "Positive";
+IF [Amount] IN {"Negative", "Zero", "MinPositive", "AtLimit", "OverLimit", "AtBalance", "OverBalance"} THEN [From] = "Valid" AND [To] = "Valid" AND [Currency] = "Same" AND [DailyLimit] = "Free" AND [Balance] = "Positive";
+IF [DailyLimit] = "Full" THEN [From] = "Valid" AND [To] = "Valid" AND [Amount] = "Normal" AND [Currency] = "Same" AND [Balance] = "Positive";
+IF [Balance] = "Zero" THEN [From] = "Valid" AND [To] = "Valid" AND [Amount] = "Normal" AND [Currency] = "Same" AND [DailyLimit] = "Free";
+# A2: [ERROR][IF CONV] — хөрвүүлэлттэй валют дээр л утга учиртай
+IF [Amount] = "OverLimitAfterConv" THEN [From] = "Valid" AND [To] = "Valid" AND [Currency] = "EUR" AND [DailyLimit] = "Free" AND [Balance] = "Positive";
